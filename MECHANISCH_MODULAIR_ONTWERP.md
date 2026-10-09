@@ -7,60 +7,62 @@ Dit document bevat de volledige mechanische specificaties voor het modulair, kli
 ## 1. Kooi / Korf (Basket) & Top Plate Montage
 
 * **Materiaal:** PLA, PLA+ of ABS.
-* **Montage op Motor:** Geschroefd op de stalen top plate met M3/M4 bouten via verzonken gaten in de onderring van de kooi.
+* **Montage op Motor:** Geschroefd op de stalen top plate via de **8x M5 schroefgaten** in de top plate.
 * **Positionering & Registratie:**
-  * Gebruik van **paspennetjes (alignment pins / dowel pins)** of ingeprinte positionerings-nokken op de top plate interface.
-  * Hierdoor kan de kooi keer op keer **100% exact op dezelfde positie** gemonteerd en gedemonteerd worden voor perfecte centrering van de spreekspoel.
-* **Demontabele Ophangpunten:**
-  * De buitenrand van de spider en de buitenrand van de surround worden geklemd met **geschroefde klemringen (screw rings)** voorzien van M3 boutjes of een bayonet/schroefdraad kliksysteem.
+  * De onderring van de kooi valt met een krappaste centrering (of met geïntegreerde 3D-geprinte pas-nokken) exact in/over de M5 gatenpatronen.
+  * Hierdoor kan de kooi keer op keer **100% exact op dezelfde positie** gemonteerd en gedemonteerd worden voor herhaalbare centrering van de spreekspoel.
+* **Minimaal Metaalgebruik:**
+  * Alleen waar mechanisch vereist worden stalen M5 bouten gebruikt voor de top plate. Alle overige klemringen en sluitingen gebruiken **3D-geprinte grof-schroefdraad, bayonet-klikverbindingen of klemringen**.
 
 ---
 
-## 2. Modulaire Conus, Stofkap & Spreekspoel
+## 2. Modulaire Conus met Externe Onder-Ribben
 
 * **Conus Constructie:**
   * **Materiaal:** PLA of ABS.
-  * **Versteviging:** Buitenzijde voorzien van **3D-geprinte radiale verstevigingsribben** (0.6 - 0.8 mm dik) die van het midden naar de buitenrand lopen voor extreme buigstijfheid.
-* **Uitneembare Stofkap & Spreekspoel-unit:**
-  * De spreekspoel met aluminium drager is vast gemonteerd op de **uitneembare stofkap (core hub / dustcap unit)**.
-  * De stofkap sluit op de conus aan via een **press-fit bayonet/schroefdraad of klik-systeem** met een O-ring of klempassing.
-  * **Voordeel:** Je kunt de spreekspoel/stofkap loskoppelen van de conus zonder de hele driver te slopen!
+  * **Versteviging:** Buitenzijde / **onderzijde van de conus** voorzien van **3D-geprinte radiale verstevigingsribben** (0.6 - 0.8 mm dik) die van het hart naar de buitenrand lopen voor extreme buigstijfheid zonder de luchtstroom aan de bovenzijde te verstoren.
 
 ---
 
-## 3. Demontabele Koppeling van Spider & Surround (Lijmloos)
+## 3. Demontabele Stofkap met Shim-Lid & Stem-Gewichten
 
-Om verschillende soorten en vormen spiders en surrounds te testen zonder te lijmen:
+* **Uitneembare Stofkap / Spreekspoel-Unit:**
+  * De spreekspoel (aluminium drager) zit vast gemonteerd aan de centrale stofkap-naaf.
+* **Schroefbare / Klikbare Bovenkap (Dust Cap Lid):**
+  * De bovenkant van de stofkap is **open te schroeven of te klikken** via een 3D-geprinte schroefdeksel / bajonetdeksel.
+  * **Functie 1 (Centreren/Shims):** Tijdens de assemblage kun je het deksel eraf halen om vloeipapier/kunststof **shim-stroken** (centreerstroken) tussen de spreekspoel en de poolkern te steken voor 100% perfecte centrering.
+  * **Functie 2 (Massa-Tuning):** Binnenin de stofkap is ruimte voorzien om **extra gewichtjes (stemmassa / tuning weights)** toe te voegen of te verwijderen om het effect van een zwaardere/lichtere conus ($M_{ms}$) live te testen!
+
+---
+
+## 4. Demontabele Koppeling van Spider & Surround (Geen Lijm, Maximaal 3D-Print Verbindingen)
 
 * **Conus <-> Surround Koppeling (Buitenrand Conus):**
-  * De conusrand is voorzien van een **klemgroef of een 2-delige schroefring-flens**.
-  * De TPU surround heeft een dikkere binnen- en buiten-kraag (bead) die in de groef geklemd/geschroefd wordt.
+  * 3D-geprinte **klik-groef of schroefdraad-ring** (geprinte grof-schroefdraad) waarmee de TPU surround-kraag muurvast geklemd wordt op de conusrand.
 * **Conus <-> Spider Koppeling (Binnenrand Conus):**
-  * De onderzijde van de conus heeft een **kraag met M2.5/M3 schroefdraad of een borgring**.
-  * De TPU spider heeft een verstevigde hart-ring die op de conuskraag geklemd wordt met een schroefsluiting.
+  * De onderzijde van de conus heeft een kraag met **3D-geprinte schroefdraad of bajonet sluiting**.
+  * De TPU spider heeft een verstevigde hart-ring die op de conuskraag geklemd wordt.
+* **Kooi <-> Spider & Surround:**
+  * Klemringen met 3D-geprinte bajonet-sluiting (kwartslag draai-klik) of grote 3D-geprinte draadringen voor snelle, gereedschapsloze montage.
 
 ---
 
-## 4. TPU 90A / 95A Flexibele Onderdelen (Spider & Surround)
-
-Aangezien **TPU 90A/95A** vrij stijf is, wordt de gewenste flexibiliteit ($C_{ms}$) bereikt door slimme **geometrische sturing**:
+## 5. TPU 90A / 95A Flexibele Onderdelen (Spider & Surround)
 
 * **TPU Surround (Soepelrand):**
   * **Wanddikte:** Exact **1 perimeter ($0.40\text{ mm}$ nozzle)**.
-  * **Geometrie:** Hoge, slanke halve rol (High-roll) of dubbele M-roll. Door de dunne $0.4\text{ mm}$ enkele wand buigt TPU 90A uiterst soepel, terwijl het scheurvast en duurzaam blijft.
+  * **Geometrie:** Hoge, slanke halve rol (High-roll) of dubbele M-roll voor maximale buigzaamheid.
 * **TPU Spider (Centreerspin):**
-  * **Wanddikte:** **1 tot 2 perimeters ($0.40 - 0.60\text{ mm}$)** met uitgespaarde spaken of diepe concentrische golven.
-  * **Geometrie:** Geometrische uitsparingen (geperforeerde/open spaken-spider) om de mechanische stijfheid bij TPU 95A precies op de juiste veerconstante af te stemmen.
+  * **Wanddikte:** **1 tot 2 perimeters ($0.40 - 0.60\text{ mm}$)**.
+  * **Geometrie:** Concentrische rimpels met geperforeerde/open spaken-geometrie om de stijfheid van TPU 95A precies op de gewenste veerconstante te brengen.
 
 ---
 
-## 5. Overzicht van de Demontabele Assemblage (Exploded View Concept)
+## 6. Assemblage Volgorde (Demontabel & Herbruikbaar)
 
-1. **Top Plate** (stalen motor met afgedraaide $\varnothing 41.20\text{ mm}$ spleet).
-2. **Basket Base Ring** (geschroefd op top plate met paspennen).
-3. **Spider Lower Clamp Ring** (schroeft spider vast aan basket).
-4. **TPU Spider** (geklemd op basket-ring en geklemd aan conus-basis).
-5. **Conus** (met externe ribben en klemflenzen).
-6. **TPU Surround** (geklemd op conus-buitenrand en geklemd op basket-bovenring).
-7. **Basket Top Ring** (schroeft surround vast aan basket).
-8. **Stofkap + Spreekspoel Unit** (klikt/schroeft in het midden van de conus).
+1. Monteer kooi op de top plate via de **8x M5 gaten**.
+2. Klik/schroef de TPU spider op de kooi en conus.
+3. Klik/schroef de TPU surround op de conus en kooi.
+4. Monteer de spreekspoel-stofkap unit in het midden van de conus.
+5. Open het **stofkap-deksel**, plaats de **centreer-shims** in de luchtspleet om de spoel exact te fixeren, en draai de kooi/spider definitief vast.
+6. Verwijder de **shims** via het geopende stofkap-deksel en sluit het deksel (of voeg eerst testgewichten toe).
