@@ -15,13 +15,17 @@ Om alle onderdelen zonder enige support-structuur strak te kunnen printen:
 
 ## 2. Top Plate & Kooi Interface Maten
 
-* **Top Plate Buitendiameter:** $\varnothing 120.00\text{ mm}$.
+* **Top Plate Buitendiameter:** $\varnothing 120.00\text{ mm}$ (Radius $R = 60.00\text{ mm}$).
 * **Top Plate Binnendiameter (Afgedraaid):** **$\varnothing 41.20\text{ mm}$** ($\pm 0.05\text{ mm}$).
-* **Gatenpatroon Top Plate:** **8x M5** op een steekcirkel van **$\varnothing 108.00\text{ mm}$** ($45^\circ$ hoek tussen de gaten).
+* **Gatenpatroon Top Plate (8x M5):**
+  * **Aantal gaten:** 8 stuks gelijk verdeeld om de **$45.0^\circ$**.
+  * **Afstand hart gat tot buitencirkel:** **$3.80\text{ mm}$**.
+  * **Straal gatensteekcirkel:** $60.00\text{ mm} - 3.80\text{ mm} = \mathbf{56.20\text{ mm}}$.
+  * **Steekcirkel Diameter (BCD):** **$\varnothing 112.40\text{ mm}$**.
 * **Kooi Onderflens (Basket Base Flange):**
   * Buitendiameter flens: $\varnothing 124.00\text{ mm}$.
   * Dikte flens: $6.00\text{ mm}$.
-  * Gaten in flens: 8x $\varnothing 5.50\text{ mm}$ met $45^\circ$ verzonken kamers voor M5 inbusbouten.
+  * Gaten in flens: 8x $\varnothing 5.50\text{ mm}$ op $\varnothing 112.40\text{ mm}$ BCD met $45^\circ$ verzonken kamers voor M5 inbusbouten.
   * **Supportless Registratie-kraag:** Een onderstaande centreerrand van $\varnothing 41.20\text{ mm}$ (+0.00 / -0.10 mm clearance) voorzien van een **$1.00\text{ mm} \times 45^\circ$ zoek-schuinte** (chamfer).
 
 ---
@@ -29,11 +33,11 @@ Om alle onderdelen zonder enige support-structuur strak te kunnen printen:
 ## 3. Kooi Spaken & Hoogte (Supportless Basket Geometry)
 
 * **Totale Kooi Hoogte:** $52.00\text{ mm}$.
-* **Kooi Spaken:** 6 radiale spaken gehoekt op **$60^\circ$ t.o.v. het printbed** ($30^\circ$ t.o.v. de verticale as). Hierdoor print de kooi 100% supportless rechtop!
+* **Kooi Spaken:** 6 radiale spaken gehoekt op **$60^\circ$ t.o.v. het printbed** ($30^\circ$ t.o.v. de verticale as). Hierdoor print de kooi 100% supportless rechtop.
 * **Spider Montage Flens (Kooi Midden-ring):**
   * Hoogte boven top plate: $18.00\text{ mm}$.
   * Binnendiameter spider-zitting: $\varnothing 84.00\text{ mm}$.
-  * **Bajonet Klemring:** 33D-geprinte bajonet-nokken met $45^\circ$ schuine onderzijde voor supportless printen.
+  * **Bajonet Klemring:** 3D-geprinte bajonet-nokken met $45^\circ$ schuine onderzijde voor supportless printen.
 * **Surround Montage Flens (Kooi Boven-ring):**
   * Buitendiameter: $\varnothing 135.00\text{ mm}$.
   * Binnendiameter: $\varnothing 112.00\text{ mm}$.
@@ -77,7 +81,7 @@ Om alle onderdelen zonder enige support-structuur strak te kunnen printen:
 
 ### B. TPU Spider (Centreerspin)
 * **Binnendiameter:** $\varnothing 38.60\text{ mm}$ met $1.2\text{ mm}$ versterkte ring.
-* **Buitendiameter:** $\varnothing 84.00\text{ mm}$ met $1.5\text{ mm}$ buitenring.
+* **Buitendiameter:** $\varnothing 84.00\text{ mm}$ with $1.5\text{ mm}$ buitenring.
 * **Golf-Profiel:** 3 concentrische rimpels met $45^\circ$ flang-hoeken.
 * **Geometrische Uitsparingen:** 6 radiale spaken-gleuven van $2.50\text{ mm}$ breed voor TPU 90A/95A flexibiliteit.
 * **Wanddikte:** **$0.40 - 0.50\text{ mm}$**.
