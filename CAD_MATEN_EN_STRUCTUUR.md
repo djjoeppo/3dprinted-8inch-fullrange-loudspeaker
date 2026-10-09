@@ -16,16 +16,16 @@ Om alle onderdelen zonder enige support-structuur strak te kunnen printen:
 ## 2. Top Plate & Kooi Interface Maten
 
 * **Top Plate Buitendiameter:** $\varnothing 120.00\text{ mm}$ (Radius $R = 60.00\text{ mm}$).
-* **Top Plate Binnendiameter (Afgedraaid):** **$\varnothing 41.20\text{ mm}$** ($\pm 0.05\text{ mm}$).
+* **Top Plate Binnendiameter (Afgedraaid):** **$\varnothing 41.20\text{ mm}$** ($\pm 0.05\text{ mm}$, Radius $r = 20.60\text{ mm}$).
 * **Gatenpatroon Top Plate (8x M5):**
   * **Aantal gaten:** 8 stuks gelijk verdeeld om de **$45.0^\circ$**.
-  * **Afstand hart gat tot buitencirkel:** **$3.80\text{ mm}$**.
-  * **Straal gatensteekcirkel:** $60.00\text{ mm} - 3.80\text{ mm} = \mathbf{56.20\text{ mm}}$.
-  * **Steekcirkel Diameter (BCD):** **$\varnothing 112.40\text{ mm}$**.
+  * **Afstand hart gat tot buitencirkel:** **$20.00\text{ mm}$**.
+  * **Straal gatensteekcirkel:** $60.00\text{ mm} - 20.00\text{ mm} = \mathbf{40.00\text{ mm}}$.
+  * **Steekcirkel Diameter (BCD):** **$\varnothing 80.00\text{ mm}$**.
 * **Kooi Onderflens (Basket Base Flange):**
   * Buitendiameter flens: $\varnothing 124.00\text{ mm}$.
   * Dikte flens: $6.00\text{ mm}$.
-  * Gaten in flens: 8x $\varnothing 5.50\text{ mm}$ op $\varnothing 112.40\text{ mm}$ BCD met $45^\circ$ verzonken kamers voor M5 inbusbouten.
+  * Gaten in flens: 8x $\varnothing 5.50\text{ mm}$ op $\varnothing 80.00\text{ mm}$ BCD met $45^\circ$ verzonken kamers voor M5 inbusbouten.
   * **Supportless Registratie-kraag:** Een onderstaande centreerrand van $\varnothing 41.20\text{ mm}$ (+0.00 / -0.10 mm clearance) voorzien van een **$1.00\text{ mm} \times 45^\circ$ zoek-schuinte** (chamfer).
 
 ---
@@ -81,7 +81,7 @@ Om alle onderdelen zonder enige support-structuur strak te kunnen printen:
 
 ### B. TPU Spider (Centreerspin)
 * **Binnendiameter:** $\varnothing 38.60\text{ mm}$ met $1.2\text{ mm}$ versterkte ring.
-* **Buitendiameter:** $\varnothing 84.00\text{ mm}$ with $1.5\text{ mm}$ buitenring.
+* **Buitendiameter:** $\varnothing 84.00\text{ mm}$ met $1.5\text{ mm}$ buitenring.
 * **Golf-Profiel:** 3 concentrische rimpels met $45^\circ$ flang-hoeken.
 * **Geometrische Uitsparingen:** 6 radiale spaken-gleuven van $2.50\text{ mm}$ breed voor TPU 90A/95A flexibiliteit.
 * **Wanddikte:** **$0.40 - 0.50\text{ mm}$**.
