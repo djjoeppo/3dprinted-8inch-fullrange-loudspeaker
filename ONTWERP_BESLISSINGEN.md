@@ -46,29 +46,13 @@ Dit document bevat alle definitieve ontwerpbeslissingen en specificaties voor de
 
 Met de afgedraaide Top Plate ($\varnothing 41.20\text{ mm}$) en 2-laags $0.30\text{ mm}$ draad ($0.70\text{ mm}$ totale spoeldikte incl. drager):
 * **Binnenste Speling (tussen poolkern en drager):** $\mathbf{0.35\text{ mm}}$ (voldoende veilige marge tegen aanlopen bij assemblage).
-* **Buitenste Speling (tussen spoel en top plate):** $\mathbf{0.70\text{ mm}}$.
+* **Buitenste Speling (tussen spoel en top plate):** $\mathbf{0.85\text{ mm}}$.
 
 ---
 
-## 4. 3D-Geprinte Luidspreker Onderdelen (Productie-instellingen)
+## 4. 3D-Geprinte Luidspreker Onderdelen (Supportless Production Guidelines)
 
-### A. Kooi / Korf (Basket / Chassis)
-* **Materiaal:** PETG of PLA+ (stijf, stevig en vormvast om de zware $120\text{ mm}$ ferrietmagneet te dragen).
-* **Ontwerp:** Open verstevigde spaken (minstens 4-6 spaken) met ruime ventilatieopeningen onder de spider voor luchtdrukverplaatsing en koeling van de spoel.
-
-### B. Conus & Stofkap (Cone & Dust Cap)
-* **Materiaal:** **LW-PLA (Lightweight foamed PLA)**.
-* **Wanddikte & Printmodus:** **Single-wall / Spiral Vase Mode ($0.40 - 0.50\text{ mm}$ nozzle)**.
-* **Vorm:** Exponentieel gekromde trechter voor maximale stijfheid bij een minimale massa ($M_{ms} \approx 3.5 - 4.5\text{ gram}$).
-
-### C. Surround / Soepelrand & Spider / Centreerspin
-* **Materiaal:** **TPU Flexibel Filament** (TPU 85A voor extra soepele surround, TPU 90A/95A voor de spider).
-* **Wanddikte:** **1-perimeter / single-wall ($0.40\text{ mm}$ nozzle)**.
-* **Geometrie Surround:** Halve rol (Half-roll) of M-roll geplooid.
-* **Geometrie Spider:** Concentrische rimpels met progressieve stijfheid.
-
----
-
-## 5. Extra Motor-Features
-
-* **Shorting Ring (Faraday Ring):** Niet verplicht / weggelaten voor de eerste fase van de bouw.
+* **Supportless 3D-Print Regel:** Alle geometrieën zijn geoptimaliseerd voor **100% supportless printen** door gebruik van de $45^\circ$-regel, $45^\circ$ afschuiningen (chamfers) op overhangingen en gehoekte spaken.
+* **Kooi / Korf (Basket):** PETG/PLA+ met $60^\circ$ gehoekte spaken (geen horizontale bridging).
+* **Conus:** LW-PLA / PLA met $45^\circ$ verlopende radiale ribben aan de onderzijde.
+* **Ophanging:** TPU 90A/95A single-wall ($0.40\text{ mm}$) met $45^\circ$ gekantelde klemdraden.
