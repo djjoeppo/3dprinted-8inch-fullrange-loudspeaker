@@ -222,18 +222,18 @@ def run(context):
         cone_feats.loftFeatures.add(loft_input)
 
         # 8 Underside Reinforcement Ribs along Cone Wall
-        # Sketched on XZ plane and extruded symmetrically
+        # Sketched on XZ plane (Y = 0) and extruded symmetrically
         sk_rib = cone_sketches.add(xz_plane)
         z_base = BASKET_HEIGHT - CONE_DEPTH
         r_in = (CONE_ID / 2.0) - 0.02
         r_out = CONE_OD / 2.0
         h_cone = CONE_DEPTH
 
-        # 4 Points forming trapezoid along cone underside
-        p1 = adsk.core.Point3D.create(r_in, z_base, 0)
-        p2 = adsk.core.Point3D.create(r_out, z_base + h_cone, 0)
-        p3 = adsk.core.Point3D.create(r_out, z_base + h_cone - 0.30, 0)
-        p4 = adsk.core.Point3D.create(r_in, z_base - 0.30, 0)
+        # Points MUST lie on XZ plane (Y = 0) so Z coordinate represents height!
+        p1 = adsk.core.Point3D.create(r_in, 0, z_base)
+        p2 = adsk.core.Point3D.create(r_out, 0, z_base + h_cone)
+        p3 = adsk.core.Point3D.create(r_out, 0, z_base + h_cone - 0.30)
+        p4 = adsk.core.Point3D.create(r_in, 0, z_base - 0.30)
 
         lines_rib = sk_rib.sketchCurves.sketchLines
         lines_rib.addByTwoPoints(p1, p2)
