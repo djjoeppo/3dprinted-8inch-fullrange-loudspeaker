@@ -1,6 +1,6 @@
 # Ontwerpbeslissingen Fullrange Luidspreker Driver
 
-Dit document bevat alle definitieve ontwerpbeslissingen en specificaties voor de luidsprekermotor, spreekspoel, geometrie en "soft parts" (conus, surround, spider) van de fullrange luidspreker.
+Dit document bevat alle definitieve ontwerpbeslissingen en specificaties voor de luidsprekermotor, spreekspoel, geometrie en **3D-geprinte onderdelen** (kooi, conus, surround, spider).
 
 ---
 
@@ -50,22 +50,22 @@ Met de afgedraaide Top Plate ($\varnothing 41.20\text{ mm}$) en 2-laags $0.30\te
 
 ---
 
-## 4. Soft Parts (Conus, Surround, Spider)
+## 4. 3D-Geprinte Luidspreker Onderdelen (Productie-instellingen)
 
-### A. Conus Vorm & Materiaal
-* **Materiaal:** Geperst/ongeperst papierpulp met natuurvezels (lichtgewicht, uitstekende interne demping, natuurlijk stemgeluid).
-* **Profiel:** Exponentieel / Geconvergeerd gekromd profiel (Curved/Exponential cone) om staande golven te dempen en de afstraling in het hoog geleidelijk te laten verlopen.
-* **Hoge-frequentie opties:**
-  * *Optie 1: Whizzer Cone (Hulpconus op de spoel)* voor maximale topreproductie boven $10\text{ kHz}$.
-  * *Optie 2: Faseplug / Stofkap* (lichtgewicht papieren stofkap).
+### A. Kooi / Korf (Basket / Chassis)
+* **Materiaal:** PETG of PLA+ (stijf, stevig en vormvast om de zware $120\text{ mm}$ ferrietmagneet te dragen).
+* **Ontwerp:** Open verstevigde spaken (minstens 4-6 spaken) met ruime ventilatieopeningen onder de spider voor luchtdrukverplaatsing en koeling van de spoel.
 
-### B. Surround (Soepelrand)
-* **Keuze bij Optie A ($X_{\max} = 1.6\text{ mm}$):** Geplooide stof/linnen rand (M-roll) of soepel PU-schuim (Foam) voor hoogste rendement en minimale verliesfactor.
-* **Keuze bij Optie B ($X_{\max} = 5.5\text{ mm}$):** SBR Rubber halve rol (Half-roll) voor gecontroleerde grote uitslag en lange levensduur.
+### B. Conus & Stofkap (Cone & Dust Cap)
+* **Materiaal:** **LW-PLA (Lightweight foamed PLA)**.
+* **Wanddikte & Printmodus:** **Single-wall / Spiral Vase Mode ($0.40 - 0.50\text{ mm}$ nozzle)**.
+* **Vorm:** Exponentieel gekromde trechter voor maximale stijfheid bij een minimale massa ($M_{ms} \approx 3.5 - 4.5\text{ gram}$).
 
-### C. Spider (Centreerspin)
-* **Materiaal:** Geharst Conex/Katoen blend.
-* **Rimpelprofiel:** Progressieve rimpeling (progressieve stijfheid $C_{ms}$) om gecontroleerde remming te bieden bij maximale uitslag en beschadiging van de spoel tegen de bodemplaat te voorkomen.
+### C. Surround / Soepelrand & Spider / Centreerspin
+* **Materiaal:** **TPU Flexibel Filament** (TPU 85A voor extra soepele surround, TPU 90A/95A voor de spider).
+* **Wanddikte:** **1-perimeter / single-wall ($0.40\text{ mm}$ nozzle)**.
+* **Geometrie Surround:** Halve rol (Half-roll) of M-roll geplooid.
+* **Geometrie Spider:** Concentrische rimpels met progressieve stijfheid.
 
 ---
 
