@@ -1,6 +1,6 @@
 # Ontwerpbeslissingen Fullrange Luidspreker Driver
 
-Dit document bevat alle definitieve ontwerpbeslissingen en specificaties voor de luidsprekermotor, spreekspoel en geometrie van de fullrange luidspreker.
+Dit document bevat alle definitieve ontwerpbeslissingen en specificaties voor de luidsprekermotor, spreekspoel, geometrie en "soft parts" (conus, surround, spider) van de fullrange luidspreker.
 
 ---
 
@@ -50,6 +50,25 @@ Met de afgedraaide Top Plate ($\varnothing 41.20\text{ mm}$) en 2-laags $0.30\te
 
 ---
 
-## 4. Extra Motor-Features
+## 4. Soft Parts (Conus, Surround, Spider)
+
+### A. Conus Vorm & Materiaal
+* **Materiaal:** Geperst/ongeperst papierpulp met natuurvezels (lichtgewicht, uitstekende interne demping, natuurlijk stemgeluid).
+* **Profiel:** Exponentieel / Geconvergeerd gekromd profiel (Curved/Exponential cone) om staande golven te dempen en de afstraling in het hoog geleidelijk te laten verlopen.
+* **Hoge-frequentie opties:**
+  * *Optie 1: Whizzer Cone (Hulpconus op de spoel)* voor maximale topreproductie boven $10\text{ kHz}$.
+  * *Optie 2: Faseplug / Stofkap* (lichtgewicht papieren stofkap).
+
+### B. Surround (Soepelrand)
+* **Keuze bij Optie A ($X_{\max} = 1.6\text{ mm}$):** Geplooide stof/linnen rand (M-roll) of soepel PU-schuim (Foam) voor hoogste rendement en minimale verliesfactor.
+* **Keuze bij Optie B ($X_{\max} = 5.5\text{ mm}$):** SBR Rubber halve rol (Half-roll) voor gecontroleerde grote uitslag en lange levensduur.
+
+### C. Spider (Centreerspin)
+* **Materiaal:** Geharst Conex/Katoen blend.
+* **Rimpelprofiel:** Progressieve rimpeling (progressieve stijfheid $C_{ms}$) om gecontroleerde remming te bieden bij maximale uitslag en beschadiging van de spoel tegen de bodemplaat te voorkomen.
+
+---
+
+## 5. Extra Motor-Features
 
 * **Shorting Ring (Faraday Ring):** Niet verplicht / weggelaten voor de eerste fase van de bouw.
