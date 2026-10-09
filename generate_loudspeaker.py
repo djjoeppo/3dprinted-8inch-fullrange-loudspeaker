@@ -3,9 +3,9 @@
 FreeCAD Parametric Loudspeaker Generator Script
 ================================================
 Generates 100% Supportless 3D-Printable Loudspeaker Driver Parts:
-1. Basket / Frame (Kooi) with 8x M5 holes on BCD 80.00mm, registration lip (ID 41.20mm), 6x 60-degree open spokes.
+1. Basket / Frame (Kooi) with 8x M5 holes on BCD 80.00mm, registration lip (ID 41.20mm), 6x open vertical pillars.
 2. Ribbed Cone (Conus) with 8x 45-degree underside radial reinforcement ribs angled along cone wall.
-3. Core Hub / Dustcap with M24x1.5 thread for cone & M28x1.0 thread for openable lid.
+3. Core Hub / Dustcap with thread for cone & thread for openable lid.
 4. Dustcap Lid (Schroefdeksel) for shim centering and mass-tuning weights.
 5. TPU Surround (Soepelrand) High-roll profile.
 6. TPU Spider (Centreerspin) Spoked corrugated profile.
@@ -40,11 +40,11 @@ BASKET_BASE_OD = 124.00
 BASKET_BASE_THICK = 6.00
 BASKET_HEIGHT = 52.00
 BASKET_SPOKE_COUNT = 6
-SPIDER_FLANGE_HEIGHT = 18.00
-SPIDER_FLANGE_ID = 84.00
-SPIDER_FLANGE_OD = 92.00
-SURROUND_FLANGE_ID = 112.00
-SURROUND_FLANGE_OD = 135.00
+SPIDER_FLANGE_HEIGHT = 28.00  # Matched to cone throat height (52 - 24 = 28mm)
+SPIDER_FLANGE_ID = 80.00
+SPIDER_FLANGE_OD = 88.00
+SURROUND_FLANGE_ID = 110.00
+SURROUND_FLANGE_OD = 130.00
 
 # Cone (Conus)
 CONE_OD = 108.00
@@ -55,6 +55,7 @@ CONE_RIB_COUNT = 8
 CONE_RIB_THICK = 0.80
 
 # Dustcap & Core Hub
+HUB_OD = 42.00
 VOICE_COIL_ID = 38.10
 HUB_HEIGHT = 15.00
 LID_OD = 32.00
@@ -77,11 +78,11 @@ PRINT_CLEARANCE = 0.15
 
 def create_trapezoidal_thread(outer_dia, pitch, height, internal=False):
     """Creates a 3D-printable 45-degree trapezoidal thread cylinder."""
-    main_cyl = Part.makeCylinder((outer_dia + PRINT_CLEARANCE) / 2.0 if internal else outer_dia / 2.0, height)
-    # 45-degree chamfer top and bottom for supportless printing
-    top_chamfer = Part.makeCone(outer_dia / 2.0, outer_dia / 2.0 - 1.0, 1.0)
+    dia = (outer_dia + PRINT_CLEARANCE) if internal else outer_dia
+    main_cyl = Part.makeCylinder(dia / 2.0, height)
+    top_chamfer = Part.makeCone(dia / 2.0 + 1.0, dia / 2.0 - 1.0, 1.0)
     top_chamfer.translate(App.Vector(0, 0, height - 1.0))
-    bot_chamfer = Part.makeCone(outer_dia / 2.0 - 1.0, outer_dia / 2.0, 1.0)
+    bot_chamfer = Part.makeCone(dia / 2.0 - 1.0, dia / 2.0 + 1.0, 1.0)
     return main_cyl.fuse(top_chamfer).fuse(bot_chamfer)
 
 
@@ -114,13 +115,13 @@ def create_loudspeaker_assembly():
         m5_hole.translate(App.Vector(hx, hy, 0))
         basket_base = basket_base.cut(m5_hole)
 
-    # Surround Flange Ring (Top Ring)
+    # Surround Flange Ring (Top Ring at Z = BASKET_HEIGHT - 6.0)
     surround_flange = Part.makeCylinder(SURROUND_FLANGE_OD / 2.0, 6.0)
     surround_flange_hole = Part.makeCylinder(SURROUND_FLANGE_ID / 2.0, 6.0)
     surround_ring = surround_flange.cut(surround_flange_hole)
     surround_ring.translate(App.Vector(0, 0, BASKET_HEIGHT - 6.0))
 
-    # Spider Flange Ring (Middle Ring)
+    # Spider Flange Ring (Middle Ring at Z = SPIDER_FLANGE_HEIGHT)
     spider_flange = Part.makeCylinder(SPIDER_FLANGE_OD / 2.0, 4.0)
     spider_flange_hole = Part.makeCylinder(SPIDER_FLANGE_ID / 2.0, 4.0)
     spider_ring = spider_flange.cut(spider_flange_hole)
@@ -128,15 +129,16 @@ def create_loudspeaker_assembly():
 
     basket_full = basket_base.fuse(surround_ring).fuse(spider_ring)
 
-    # Add 6 Slanted Open Spokes (60-degrees relative to horizontal, along perimeter wall)
-    spoke_r_in = SPIDER_FLANGE_OD / 2.0 - 2.0
-    spoke_r_out = SURROUND_FLANGE_OD / 2.0 - 4.0
+    # Add 6 Vertical Pillars strictly contained between base ring and surround ring
+    pillar_radius = (SURROUND_FLANGE_OD / 2.0) - 3.5  # Exactly under the surround flange
+    pillar_height = BASKET_HEIGHT - BASKET_BASE_THICK - 6.0
     for i in range(BASKET_SPOKE_COUNT):
         angle = i * (2.0 * math.pi / BASKET_SPOKE_COUNT)
-        # Create thin angled spoke along perimeter
-        spoke_pillar = Part.makeCylinder(3.0, BASKET_HEIGHT)
-        spoke_pillar.translate(App.Vector(spoke_r_out * math.cos(angle), spoke_r_out * math.sin(angle), 0))
-        basket_full = basket_full.fuse(spoke_pillar)
+        px = pillar_radius * math.cos(angle)
+        py = pillar_radius * math.sin(angle)
+        pillar = Part.makeCylinder(3.0, pillar_height)
+        pillar.translate(App.Vector(px, py, BASKET_BASE_THICK))
+        basket_full = basket_full.fuse(pillar)
 
     basket_obj = doc.addObject("Part::Feature", "Basket_Frame")
     basket_obj.Shape = basket_full
@@ -144,32 +146,40 @@ def create_loudspeaker_assembly():
 
     # 2. RIBBED CONE
     # --------------
-    cone_outer = Part.makeCone(CONE_OD / 2.0, CONE_ID / 2.0, CONE_DEPTH)
-    cone_inner = Part.makeCone((CONE_OD - 2*CONE_THICK) / 2.0, (CONE_ID - 2*CONE_THICK) / 2.0, CONE_DEPTH)
+    cone_outer = Part.makeCone(CONE_ID / 2.0, CONE_OD / 2.0, CONE_DEPTH)
+    cone_inner = Part.makeCone((CONE_ID - 2*CONE_THICK) / 2.0, (CONE_OD - 2*CONE_THICK) / 2.0, CONE_DEPTH)
     cone_shell = cone_outer.cut(cone_inner)
 
-    # Underside Reinforcement Ribs following the 55-degree cone wall slope
-    cone_slope_rad = math.atan2(CONE_DEPTH, (CONE_OD - CONE_ID) / 2.0)
-    rib_length = math.sqrt(((CONE_OD - CONE_ID) / 2.0)**2 + CONE_DEPTH**2)
+    # Add 8 Underside Reinforcement Ribs flush along the cone wall with volumetric overlap
+    r_in = CONE_ID / 2.0 - 0.2
+    r_out = CONE_OD / 2.0
+    h = CONE_DEPTH
+
+    p1 = App.Vector(r_in, 0, 0)
+    p2 = App.Vector(r_out, 0, h)
+    p3 = App.Vector(r_out, 0, h - 3.0)
+    p4 = App.Vector(r_in, 0, -3.0)
+
+    rib_wire = Part.makePolygon([p1, p2, p3, p4, p1])
+    rib_face = Part.Face(rib_wire)
+    rib_solid = rib_face.extrude(App.Vector(0, CONE_RIB_THICK, 0))
+    rib_solid.translate(App.Vector(0, -CONE_RIB_THICK / 2.0, 0))
 
     for i in range(CONE_RIB_COUNT):
-        angle = i * (2.0 * math.pi / CONE_RIB_COUNT)
-        rib = Part.makeBox(CONE_RIB_THICK, rib_length, 3.0)
-        rib.translate(App.Vector(-CONE_RIB_THICK / 2.0, 0, 0))
-        # Rotate along cone slope angle
-        rib.rotate(App.Vector(0,0,0), App.Vector(1,0,0), -math.degrees(cone_slope_rad))
-        rib.translate(App.Vector(0, CONE_ID / 2.0, 0))
-        rib.rotate(App.Vector(0,0,0), App.Vector(0,0,1), math.degrees(angle))
-        cone_shell = cone_shell.fuse(rib)
+        angle = i * (360.0 / CONE_RIB_COUNT)
+        rotated_rib = rib_solid.copy()
+        rotated_rib.rotate(App.Vector(0,0,0), App.Vector(0,0,1), angle)
+        cone_shell = cone_shell.fuse(rotated_rib)
 
+    # Position Cone at throat level
     cone_shell.translate(App.Vector(0, 0, BASKET_HEIGHT - CONE_DEPTH))
     cone_obj = doc.addObject("Part::Feature", "Cone_Ribbed")
     cone_obj.Shape = cone_shell
     cone_obj.ViewObject.ShapeColor = (0.8, 0.8, 0.2) # Gold
 
-    # 3. DUSTCAP CORE HUB (WITH M24 TRAPEZOIDAL THREAD)
-    # -------------------------------------------------
-    hub_outer = create_trapezoidal_thread(24.0, 1.5, HUB_HEIGHT, internal=False)
+    # 3. DUSTCAP CORE HUB (HUB_OD = 42.0mm > VOICE_COIL_ID = 38.1mm)
+    # --------------------------------------------------------------
+    hub_outer = create_trapezoidal_thread(HUB_OD, 1.5, HUB_HEIGHT, internal=False)
     hub_inner = Part.makeCylinder(VOICE_COIL_ID / 2.0, HUB_HEIGHT)
     hub = hub_outer.cut(hub_inner)
     hub.translate(App.Vector(0, 0, BASKET_HEIGHT - CONE_DEPTH))
@@ -178,8 +188,8 @@ def create_loudspeaker_assembly():
     hub_obj.Shape = hub
     hub_obj.ViewObject.ShapeColor = (0.8, 0.2, 0.2) # Red
 
-    # 4. DUSTCAP LID WITH WEIGHT COMPARTMENT (WITH M28 THREAD)
-    # --------------------------------------------------------
+    # 4. DUSTCAP LID WITH WEIGHT COMPARTMENT
+    # --------------------------------------
     lid_main = create_trapezoidal_thread(LID_OD, 1.0, LID_THICK, internal=False)
     weight_chamber = Part.makeCylinder(LID_WEIGHT_COMPARTMENT_DIA / 2.0, LID_WEIGHT_COMPARTMENT_DEPTH)
     weight_chamber.translate(App.Vector(0, 0, LID_THICK - LID_WEIGHT_COMPARTMENT_DEPTH))
@@ -242,7 +252,7 @@ if __name__ == "__main__":
     print("==================================================")
     print(f"Top Plate Bore: {TOP_PLATE_BORE} mm")
     print(f"M5 Bolt Circle Diameter (BCD): {M5_BCD} mm (8x M5 holes)")
-    print(f"Basket Height: {BASKET_HEIGHT} mm (with 6 open perimeter spokes)")
+    print(f"Basket Height: {BASKET_HEIGHT} mm (with 6 open perimeter pillars)")
     print(f"Cone Depth: {CONE_DEPTH} mm (with {CONE_RIB_COUNT} 55-degree angled ribs)")
     print(f"TPU Spider Slots: {SPIDER_SPOKE_SLOTS} slots for TPU 90A/95A flexibility")
     print("Supportless 3D-Print Rules: Enabled (45-degree chamfers & trapezoidal threads)")
