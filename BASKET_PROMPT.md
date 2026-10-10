@@ -4,7 +4,63 @@ Dit document bevat kant-en-klare, gedetailleerde prompts die je kunt gebruiken i
 
 ---
 
-## 1. Uitgebreide CAD / Code Generatie Prompt (Voor LLMs & CAD Script Generators)
+## 1. Fusion 360 AI Feature-by-Feature CAD Modeling Prompt (Extreem Exact)
+
+Gebruik deze prompt als je de AI in Fusion 360 (of een CAD AI Copilot) exacte stap-voor-stap feature-instructies wilt geven:
+
+```text
+Create a parametric 3D solid model of a 100% supportless 3D-printable loudspeaker basket component in Autodesk Fusion 360 following these exact sequential CAD operations:
+
+1. UNITS & ORIENTATION:
+   - Units: Millimeters (mm).
+   - Up Axis: Z-axis.
+
+2. COMPONENT CREATION:
+   - Create a new component named "Loudspeaker_Basket".
+
+3. BASE FLANGE (Onderflens - Motor Interface):
+   - Sketch 1 on XY Plane (Z = 0.00 mm):
+     - Circle 1: Center (0,0), Diameter = 124.00 mm (Outer Rim).
+     - Circle 2: Center (0,0), Diameter = 41.20 mm (Registration Lip ID, tolerance +0.00/-0.10 mm).
+   - Feature 1 (Extrude): Extrude annular profile between Ø124.00 mm and Ø41.20 mm upwards along +Z by 6.00 mm (New Body).
+   - Feature 2 (Chamfer): Apply 1.00 mm x 45-degree chamfer to the bottom inner edge of Ø41.20 mm for registration alignment.
+   - Sketch 2 on XY Plane (Z = 0.00 mm):
+     - Bolt Circle Diameter (BCD): Circle with Diameter = 80.00 mm (Radius = 40.00 mm).
+     - Create 8 circles with Diameter = 5.50 mm spaced at 45.0-degree intervals (0°, 45°, 90°, 135°, 180°, 225°, 270°, 315°).
+   - Feature 3 (Cut Extrude): Cut through the Base Flange (depth = 6.00 mm) for the 8x M5 bolt holes.
+   - Feature 4 (Countersink Chamfer): Add 1.50 mm x 45-degree chamfers to the top rim of all 8 M5 holes for recessed socket screws.
+
+4. SPIDER MOUNTING RING (Midden-Flens op Z = 28.00 mm):
+   - Construction Plane 1: Offset plane from XY Plane at Z = 28.00 mm.
+   - Sketch 3 on Construction Plane 1:
+     - Circle 1: Center (0,0), Diameter = 88.00 mm (OD).
+     - Circle 2: Center (0,0), Diameter = 80.00 mm (ID).
+   - Feature 5 (Extrude): Extrude profile upwards by 4.00 mm (Z = 28.00 mm to 32.00 mm) as a Join operation or New Body.
+   - Feature 6 (Supportless Chamfers): Apply a 1.00 mm x 45-degree chamfer to the bottom underside edge of the ring to guarantee supportless printing.
+
+5. SURROUND MOUNTING RING (Boven-Flens op Z = 52.00 mm):
+   - Construction Plane 2: Offset plane from XY Plane at Z = 46.00 mm.
+   - Sketch 4 on Construction Plane 2:
+     - Circle 1: Center (0,0), Diameter = 130.00 mm (OD).
+     - Circle 2: Center (0,0), Diameter = 110.00 mm (ID).
+   - Feature 7 (Extrude): Extrude profile upwards by 6.00 mm (Z = 46.00 mm to 52.00 mm).
+   - Feature 8 (Trapezoidal Thread): Add external M125 x 2.0 mm 45-degree trapezoidal thread profile on the outer face (Ø130.00 mm) for the threaded clamp ring.
+
+6. STRUCTURAL PILLARS / SPOKES (6 Open Spaken):
+   - Sketch 5 on Plane at Z = 6.00 mm (top face of base flange):
+     - Create 6 circular profile circles with Diameter = 6.00 mm positioned at Radius R = 61.50 mm, spaced every 60.0 degrees (0°, 60°, 120°, 180°, 240°, 300°).
+   - Feature 9 (Extrude): Extrude the 6 pillar circles from Z = 6.00 mm to Z = 46.00 mm (distance = 40.00 mm).
+   - Feature 10 (Connecting Spokes to Spider Ring): Create 6 radial horizontal connecting bars (width = 4.00 mm, height = 4.00 mm) at Z = 28.00 mm extending from the spider ring (R = 44.00 mm) to the outer pillars (R = 61.50 mm).
+   - Feature 11 (Fillets/Chamfers): Apply 1.00 mm x 45-degree chamfers to all horizontal overhang joints between pillars, spokes, and flanges.
+
+7. FINAL VERIFICATION:
+   - Confirm all overhang angles are >= 45 degrees relative to the XY bed plane.
+   - Ensure complete 100% supportless 3D print capability without support material.
+```
+
+---
+
+## 2. Uitgebreide CAD / Code Generatie Prompt (Voor LLMs & CAD Script Generators)
 
 Gebruik onderstaande prompt als je een LLM vraagt om Python-scripts (Fusion 360 / FreeCAD) of OpenSCAD code te schrijven voor de basket:
 
@@ -43,7 +99,7 @@ Genereer een CAD 3D-model / script voor een 100% supportless 3D-printbare luidsp
 
 ---
 
-## 2. Beknopte Prompt (Voor Snel Gebruik / Chatbots)
+## 3. Beknopte Prompt (Voor Snel Gebruik / Chatbots)
 
 Gebruik deze korte prompt voor een snelle vraag of schets in een AI-chat:
 
@@ -58,7 +114,7 @@ Ontwerp een 3D-geprinte luidspreker basket (kooi) in CAD:
 
 ---
 
-## 3. Visuele Visualisatie Prompt (Voor Midjourney / DALL-E / Stable Diffusion)
+## 4. Visuele Visualisatie Prompt (Voor Midjourney / DALL-E / Stable Diffusion)
 
 Als je een realistische of technische 3D-rendering van de basket wilt genereren:
 
@@ -68,7 +124,7 @@ Als je een realistische of technische 3D-rendering van de basket wilt genereren:
 
 ---
 
-## 4. LLM Engineering & Aanpassings-Prompt (Voor Verdere Doorontwikkeling)
+## 5. LLM Engineering & Aanpassings-Prompt (Voor Verdere Doorontwikkeling)
 
 Als je de basket wilt aanpassen of uitbreiden (bijvoorbeeld ander aantal spaken of gewijzigde hoogtematen):
 
