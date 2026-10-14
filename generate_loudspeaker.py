@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-FreeCAD Parametric Loudspeaker Generator Script
-================================================
-Generates 100% Supportless 3D-Printable Loudspeaker Driver Parts:
-1. Basket / Frame (Kooi) with 8x M5 holes on BCD 80.00mm, registration lip (ID 41.20mm), 6x open vertical pillars.
-2. Ribbed Cone (Conus) with 8x 45-degree underside radial reinforcement ribs angled along cone wall.
+FreeCAD Parametric Loudspeaker Generator Script (8-Inch Driver)
+==============================================================
+Generates 100% Supportless 3D-Printable 8-Inch Loudspeaker Driver Parts:
+1. Basket / Frame (Kooi 8-inch, OD 210mm) with 8x M5 holes on BCD 80.00mm, registration lip (ID 41.20mm), 6x vertical pillars.
+2. Ribbed Cone (Conus 8-inch, OD 185mm) with 8x 45-degree underside radial reinforcement ribs angled along cone wall.
 3. Core Hub / Dustcap with thread for cone & thread for openable lid.
 4. Dustcap Lid (Schroefdeksel) for shim centering and mass-tuning weights.
-5. TPU Surround (Soepelrand) High-roll profile.
-6. TPU Spider (Centreerspin) Spoked corrugated profile.
+5. TPU Surround (Soepelrand 8-inch, OD 202mm) High-roll profile.
+6. TPU Spider (Centreerspin, OD 84mm) Spoked corrugated profile.
 7. Clamp Rings (Klemringen) for glueless assembly.
 
 Can be run inside FreeCAD (Macro / Console) or standalone via FreeCADCmd.
@@ -25,7 +25,7 @@ except ImportError:
     Part = None
 
 # ==========================================
-# PARAMETERS & DIMENSIONS (from CAD_MATEN_EN_STRUCTUUR.md)
+# PARAMETERS & DIMENSIONS (8-Inch Driver)
 # ==========================================
 
 # Motor Interface
@@ -35,21 +35,21 @@ M5_HOLE_COUNT = 8
 M5_BCD = 80.00  # Bolt Circle Diameter (20mm edge offset)
 M5_HOLE_DIA = 5.50
 
-# Basket (Kooi)
+# Basket (Kooi - 8-Inch Chassis)
 BASKET_BASE_OD = 124.00
 BASKET_BASE_THICK = 6.00
-BASKET_HEIGHT = 52.00
+BASKET_HEIGHT = 75.00
 BASKET_SPOKE_COUNT = 6
-SPIDER_FLANGE_HEIGHT = 28.00  # Matched to cone throat height (52 - 24 = 28mm)
+SPIDER_FLANGE_HEIGHT = 28.00  # Matched to cone throat height (75 - 47 = 28mm)
 SPIDER_FLANGE_ID = 80.00
 SPIDER_FLANGE_OD = 88.00
-SURROUND_FLANGE_ID = 110.00
-SURROUND_FLANGE_OD = 130.00
+SURROUND_FLANGE_ID = 185.00
+SURROUND_FLANGE_OD = 210.00
 
-# Cone (Conus)
-CONE_OD = 108.00
+# Cone (Conus - 8-Inch)
+CONE_OD = 185.00
 CONE_ID = 38.60
-CONE_DEPTH = 24.00
+CONE_DEPTH = 47.00
 CONE_THICK = 0.60
 CONE_RIB_COUNT = 8
 CONE_RIB_THICK = 0.80
@@ -63,9 +63,9 @@ LID_THICK = 10.00
 LID_WEIGHT_COMPARTMENT_DIA = 26.00
 LID_WEIGHT_COMPARTMENT_DEPTH = 7.00
 
-# TPU Soft Parts
-SURROUND_ID = 107.50
-SURROUND_OD = 125.00
+# TPU Soft Parts (8-Inch Surround & Spider)
+SURROUND_ID = 184.00
+SURROUND_OD = 202.00
 SURROUND_THICK = 0.40
 SPIDER_ID = 38.60
 SPIDER_OD = 84.00
@@ -87,17 +87,17 @@ def create_trapezoidal_thread(outer_dia, pitch, height, internal=False):
 
 
 def create_loudspeaker_assembly():
-    """Generates the full loudspeaker CAD models if FreeCAD API is available."""
+    """Generates the full 8-inch loudspeaker CAD models if FreeCAD API is available."""
     if App is None or Part is None:
         print("FreeCAD module not loaded. Run this script inside FreeCAD GUI or FreeCADCmd.")
         return
 
     # Create new Document
-    doc = App.newDocument("ModularLoudspeaker")
-    print("Created new FreeCAD document: ModularLoudspeaker")
+    doc = App.newDocument("ModularLoudspeaker_8Inch")
+    print("Created new FreeCAD document: ModularLoudspeaker_8Inch")
 
-    # 1. BASKET BASE RING & OPEN FRAME
-    # --------------------------------
+    # 1. BASKET BASE RING & OPEN FRAME (8-INCH)
+    # -----------------------------------------
     base_cylinder = Part.makeCylinder(BASKET_BASE_OD / 2.0, BASKET_BASE_THICK)
     center_hole = Part.makeCylinder(TOP_PLATE_BORE / 2.0, BASKET_BASE_THICK)
     basket_base = base_cylinder.cut(center_hole)
@@ -130,35 +130,35 @@ def create_loudspeaker_assembly():
     basket_full = basket_base.fuse(surround_ring).fuse(spider_ring)
 
     # Add 6 Vertical Pillars strictly contained between base ring and surround ring
-    pillar_radius = (SURROUND_FLANGE_OD / 2.0) - 3.5  # Exactly under the surround flange
+    pillar_radius = (SURROUND_FLANGE_OD / 2.0) - 5.0  # Exactly under the 8-inch surround flange
     pillar_height = BASKET_HEIGHT - BASKET_BASE_THICK - 6.0
     for i in range(BASKET_SPOKE_COUNT):
         angle = i * (2.0 * math.pi / BASKET_SPOKE_COUNT)
         px = pillar_radius * math.cos(angle)
         py = pillar_radius * math.sin(angle)
-        pillar = Part.makeCylinder(3.0, pillar_height)
+        pillar = Part.makeCylinder(4.0, pillar_height)
         pillar.translate(App.Vector(px, py, BASKET_BASE_THICK))
         basket_full = basket_full.fuse(pillar)
 
-    basket_obj = doc.addObject("Part::Feature", "Basket_Frame")
+    basket_obj = doc.addObject("Part::Feature", "Basket_Frame_8Inch")
     basket_obj.Shape = basket_full
     basket_obj.ViewObject.ShapeColor = (0.2, 0.2, 0.8) # Blue
 
-    # 2. RIBBED CONE
-    # --------------
+    # 2. RIBBED CONE (8-INCH)
+    # -----------------------
     cone_outer = Part.makeCone(CONE_ID / 2.0, CONE_OD / 2.0, CONE_DEPTH)
     cone_inner = Part.makeCone((CONE_ID - 2*CONE_THICK) / 2.0, (CONE_OD - 2*CONE_THICK) / 2.0, CONE_DEPTH)
     cone_shell = cone_outer.cut(cone_inner)
 
-    # Add 8 Underside Reinforcement Ribs flush along the cone wall with volumetric overlap
+    # Add 8 Underside Reinforcement Ribs flush along the 8-inch cone wall
     r_in = CONE_ID / 2.0 - 0.2
     r_out = CONE_OD / 2.0
     h = CONE_DEPTH
 
     p1 = App.Vector(r_in, 0, 0)
     p2 = App.Vector(r_out, 0, h)
-    p3 = App.Vector(r_out, 0, h - 3.0)
-    p4 = App.Vector(r_in, 0, -3.0)
+    p3 = App.Vector(r_out, 0, h - 4.0)
+    p4 = App.Vector(r_in, 0, -4.0)
 
     rib_wire = Part.makePolygon([p1, p2, p3, p4, p1])
     rib_face = Part.Face(rib_wire)
@@ -173,7 +173,7 @@ def create_loudspeaker_assembly():
 
     # Position Cone at throat level
     cone_shell.translate(App.Vector(0, 0, BASKET_HEIGHT - CONE_DEPTH))
-    cone_obj = doc.addObject("Part::Feature", "Cone_Ribbed")
+    cone_obj = doc.addObject("Part::Feature", "Cone_Ribbed_8Inch")
     cone_obj.Shape = cone_shell
     cone_obj.ViewObject.ShapeColor = (0.8, 0.8, 0.2) # Gold
 
@@ -200,14 +200,14 @@ def create_loudspeaker_assembly():
     lid_obj.Shape = lid
     lid_obj.ViewObject.ShapeColor = (0.2, 0.8, 0.2) # Green
 
-    # 5. TPU SURROUND (HIGH-ROLL DUAL-FLANGE)
-    # --------------------------------------
+    # 5. TPU SURROUND (8-INCH HIGH-ROLL DUAL-FLANGE)
+    # ----------------------------------------------
     surround_outer = Part.makeCylinder(SURROUND_OD / 2.0, 6.0)
     surround_inner = Part.makeCylinder(SURROUND_ID / 2.0, 6.0)
     surround = surround_outer.cut(surround_inner)
     surround.translate(App.Vector(0, 0, BASKET_HEIGHT - 6.0))
 
-    surround_obj = doc.addObject("Part::Feature", "TPU_Surround")
+    surround_obj = doc.addObject("Part::Feature", "TPU_Surround_8Inch")
     surround_obj.Shape = surround
     surround_obj.ViewObject.ShapeColor = (0.9, 0.5, 0.1) # Orange
 
@@ -230,30 +230,30 @@ def create_loudspeaker_assembly():
     spider_obj.Shape = spider
     spider_obj.ViewObject.ShapeColor = (0.6, 0.1, 0.8) # Purple
 
-    # 7. CLAMP RINGS FOR GLUELESS ASSEMBLY
-    # ------------------------------------
+    # 7. CLAMP RINGS FOR GLUELESS ASSEMBLY (8-INCH)
+    # ---------------------------------------------
     clamp_outer = Part.makeCylinder(SURROUND_OD / 2.0 + 4.0, 4.0)
     clamp_inner = Part.makeCylinder(SURROUND_OD / 2.0 - 2.0, 4.0)
     clamp_ring = clamp_outer.cut(clamp_inner)
     clamp_ring.translate(App.Vector(0, 0, BASKET_HEIGHT))
 
-    clamp_obj = doc.addObject("Part::Feature", "Clamp_Ring")
+    clamp_obj = doc.addObject("Part::Feature", "Clamp_Ring_8Inch")
     clamp_obj.Shape = clamp_ring
     clamp_obj.ViewObject.ShapeColor = (0.5, 0.5, 0.5) # Grey
 
     # Recompute document
     doc.recompute()
-    print("FreeCAD loudspeaker assembly successfully generated!")
+    print("FreeCAD 8-inch loudspeaker assembly successfully generated!")
 
 
 if __name__ == "__main__":
     print("==================================================")
-    print("FreeCAD Parametric Loudspeaker Generator Starting")
+    print("FreeCAD 8-Inch Parametric Loudspeaker Generator")
     print("==================================================")
     print(f"Top Plate Bore: {TOP_PLATE_BORE} mm")
     print(f"M5 Bolt Circle Diameter (BCD): {M5_BCD} mm (8x M5 holes)")
-    print(f"Basket Height: {BASKET_HEIGHT} mm (with 6 open perimeter pillars)")
-    print(f"Cone Depth: {CONE_DEPTH} mm (with {CONE_RIB_COUNT} 55-degree angled ribs)")
+    print(f"8-Inch Basket Height: {BASKET_HEIGHT} mm (flange OD: {SURROUND_FLANGE_OD} mm)")
+    print(f"8-Inch Cone Depth: {CONE_DEPTH} mm (OD: {CONE_OD} mm with {CONE_RIB_COUNT} angled ribs)")
     print(f"TPU Spider Slots: {SPIDER_SPOKE_SLOTS} slots for TPU 90A/95A flexibility")
     print("Supportless 3D-Print Rules: Enabled (45-degree chamfers & trapezoidal threads)")
     print("==================================================")

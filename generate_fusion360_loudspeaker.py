@@ -1,18 +1,18 @@
-# Fusion 360 Parametric Loudspeaker Generator Script
-# ====================================================
-# Generates 100% Supportless 3D-Printable Loudspeaker Driver Parts in Autodesk Fusion 360:
-# 1. Basket / Frame (Kooi) with 8x M5 holes on BCD 80.00mm, registration lip (ID 41.20mm), 6x open vertical pillars, and spider spokes.
-# 2. Ribbed Cone (Conus) with 8x 45-degree underside radial reinforcement ribs angled along cone wall.
+# Fusion 360 Parametric Loudspeaker Generator Script (8-Inch Driver)
+# ===================================================================
+# Generates 100% Supportless 3D-Printable 8-Inch Loudspeaker Driver Parts in Autodesk Fusion 360:
+# 1. Basket / Frame (Kooi 8-inch) with 8x M5 holes on BCD 80.00mm, registration lip (ID 41.20mm), 6x vertical pillars.
+# 2. Ribbed Cone (Conus 8-inch, OD 185mm) with 8x 45-degree underside radial reinforcement ribs angled along cone wall.
 # 3. Core Hub / Dustcap with thread for cone & thread for openable lid.
 # 4. Dustcap Lid (Schroefdeksel) for shim centering and mass-tuning weights.
-# 5. TPU Surround (Soepelrand) High-roll profile.
+# 5. TPU Surround (Soepelrand 8-inch, OD 202mm) High-roll profile.
 # 6. TPU Spider (Centreerspin) Spoked corrugated profile.
 # 7. Clamp Rings (Klemringen) for glueless assembly.
 #
 # How to use in Fusion 360:
 # 1. Open Autodesk Fusion 360.
 # 2. Go to UTILITIES -> Scripts and Add-Ins (Shift + S).
-# 3. Click "Create" under Scripts, name it "GenerateLoudspeaker".
+# 3. Click "Create" under Scripts, name it "GenerateLoudspeaker8Inch".
 # 4. Replace script content with this code and click RUN.
 
 import adsk.core
@@ -29,17 +29,17 @@ M5_HOLE_DIA = 0.55            # 5.50 mm
 
 BASKET_BASE_OD = 12.40        # 124.00 mm
 BASKET_BASE_THICK = 0.60      # 6.00 mm
-BASKET_HEIGHT = 5.20          # 52.00 mm
+BASKET_HEIGHT = 7.50          # 75.00 mm (8-inch frame height)
 BASKET_SPOKE_COUNT = 6
 SPIDER_FLANGE_HEIGHT = 2.80   # 28.00 mm
 SPIDER_FLANGE_ID = 8.00       # 80.00 mm
 SPIDER_FLANGE_OD = 8.80       # 88.00 mm
-SURROUND_FLANGE_ID = 11.00    # 110.00 mm
-SURROUND_FLANGE_OD = 13.00    # 130.00 mm
+SURROUND_FLANGE_ID = 18.50    # 185.00 mm (8-inch cone throat/mouth interface)
+SURROUND_FLANGE_OD = 21.00    # 210.00 mm (8-inch frame outer diameter)
 
-CONE_OD = 10.80               # 108.00 mm
+CONE_OD = 18.50               # 185.00 mm (8-inch cone)
 CONE_ID = 3.86                # 38.60 mm
-CONE_DEPTH = 2.40             # 24.00 mm
+CONE_DEPTH = 4.70             # 47.00 mm
 CONE_THICK = 0.06             # 0.60 mm
 CONE_RIB_COUNT = 8
 CONE_RIB_THICK = 0.08         # 0.80 mm
@@ -52,8 +52,8 @@ LID_THICK = 1.00              # 10.00 mm
 LID_WEIGHT_COMPARTMENT_DIA = 2.60 # 26.00 mm
 LID_WEIGHT_COMPARTMENT_DEPTH = 0.70 # 7.00 mm
 
-SURROUND_ID = 10.75           # 107.50 mm
-SURROUND_OD = 12.50           # 125.00 mm
+SURROUND_ID = 18.40           # 184.00 mm
+SURROUND_OD = 20.20           # 202.00 mm (8-inch surround)
 SPIDER_ID = 3.86              # 38.60 mm
 SPIDER_OD = 8.40              # 84.00 mm
 SPIDER_SPOKE_SLOTS = 6
@@ -98,10 +98,10 @@ def run(context):
             p_input.setByDistanceOnPlane(base_plane, adsk.core.ValueInput.createByReal(offset_cm))
             return planes.add(p_input)
 
-        # 1. BASKET / FRAME (KOOI)
-        # ------------------------
+        # 1. BASKET / FRAME (KOOI 8-INCH)
+        # -------------------------------
         basket_comp = root_comp.occurrences.addNewComponent(adsk.core.Matrix3D.create()).component
-        basket_comp.name = "Basket_Frame"
+        basket_comp.name = "Basket_Frame_8Inch"
         basket_feats = basket_comp.features
         basket_sketches = basket_comp.sketches
 
@@ -155,15 +155,15 @@ def run(context):
             adsk.fusion.FeatureOperations.NewBodyFeatureOperation
         )
 
-        # 6 Open Vertical Pillars
-        pillar_r = (SURROUND_FLANGE_OD / 2.0) - 0.35
+        # 6 Vertical Pillars (8-inch frame)
+        pillar_r = (SURROUND_FLANGE_OD / 2.0) - 0.50
         pillar_h = BASKET_HEIGHT - BASKET_BASE_THICK - 0.60
         sk_pillars = basket_sketches.add(make_offset_plane(xy_plane, BASKET_BASE_THICK))
         for i in range(BASKET_SPOKE_COUNT):
             angle = i * (2.0 * math.pi / BASKET_SPOKE_COUNT)
             px = pillar_r * math.cos(angle)
             py = pillar_r * math.sin(angle)
-            sk_pillars.sketchCurves.sketchCircles.addByCenterRadius(adsk.core.Point3D.create(px, py, 0), 0.30)
+            sk_pillars.sketchCurves.sketchCircles.addByCenterRadius(adsk.core.Point3D.create(px, py, 0), 0.40)
 
         profs_pillars = adsk.core.ObjectCollection.create()
         for p in sk_pillars.profiles:
@@ -197,10 +197,10 @@ def run(context):
         ext_spk_input.setDistanceExtent(False, adsk.core.ValueInput.createByReal(0.40))
         basket_feats.extrudeFeatures.add(ext_spk_input)
 
-        # 2. RIBBED CONE
-        # --------------
+        # 2. RIBBED CONE (8-INCH)
+        # -----------------------
         cone_comp = root_comp.occurrences.addNewComponent(adsk.core.Matrix3D.create()).component
-        cone_comp.name = "Cone_Ribbed"
+        cone_comp.name = "Cone_Ribbed_8Inch"
         cone_feats = cone_comp.features
         cone_sketches = cone_comp.sketches
 
@@ -222,18 +222,16 @@ def run(context):
         cone_feats.loftFeatures.add(loft_input)
 
         # 8 Underside Reinforcement Ribs along Cone Wall
-        # Sketched on XZ plane (Y = 0) and extruded symmetrically
         sk_rib = cone_sketches.add(xz_plane)
         z_base = BASKET_HEIGHT - CONE_DEPTH
         r_in = (CONE_ID / 2.0) - 0.02
         r_out = CONE_OD / 2.0
         h_cone = CONE_DEPTH
 
-        # Points MUST lie on XZ plane (Y = 0) so Z coordinate represents height!
         p1 = adsk.core.Point3D.create(r_in, 0, z_base)
         p2 = adsk.core.Point3D.create(r_out, 0, z_base + h_cone)
-        p3 = adsk.core.Point3D.create(r_out, 0, z_base + h_cone - 0.30)
-        p4 = adsk.core.Point3D.create(r_in, 0, z_base - 0.30)
+        p3 = adsk.core.Point3D.create(r_out, 0, z_base + h_cone - 0.40)
+        p4 = adsk.core.Point3D.create(r_in, 0, z_base - 0.40)
 
         lines_rib = sk_rib.sketchCurves.sketchLines
         lines_rib.addByTwoPoints(p1, p2)
@@ -301,10 +299,10 @@ def run(context):
             adsk.fusion.FeatureOperations.CutFeatureOperation
         )
 
-        # 5. TPU SURROUND
-        # ---------------
+        # 5. TPU SURROUND (8-INCH)
+        # ------------------------
         surr_comp = root_comp.occurrences.addNewComponent(adsk.core.Matrix3D.create()).component
-        surr_comp.name = "TPU_Surround"
+        surr_comp.name = "TPU_Surround_8Inch"
         surr_feats = surr_comp.features
         surr_sketches = surr_comp.sketches
 
@@ -352,10 +350,10 @@ def run(context):
         ext_slot_input.setDistanceExtent(False, adsk.core.ValueInput.createByReal(0.30))
         spid_feats.extrudeFeatures.add(ext_slot_input)
 
-        # 7. CLAMP RING
-        # -------------
+        # 7. CLAMP RING (8-INCH)
+        # ----------------------
         clamp_comp = root_comp.occurrences.addNewComponent(adsk.core.Matrix3D.create()).component
-        clamp_comp.name = "Clamp_Ring"
+        clamp_comp.name = "Clamp_Ring_8Inch"
         clamp_feats = clamp_comp.features
         clamp_sketches = clamp_comp.sketches
 
@@ -369,7 +367,7 @@ def run(context):
             adsk.fusion.FeatureOperations.NewBodyFeatureOperation
         )
 
-        ui.messageBox('Modular Loudspeaker Generator successfully completed!\nAll 7 components generated in Fusion 360.')
+        ui.messageBox('Modular 8-Inch Loudspeaker Generator successfully completed!\nAll 7 components generated in Fusion 360.')
 
     except:
         if ui:
